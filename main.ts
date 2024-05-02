@@ -31,9 +31,8 @@ namespace text {
                         parsed.push(segment);
                         segment = "";
                     }
-                    this.makeField();
-                    parsed.push(null);
-                    this.paramNum += 1;
+                    parsed.push(this.makeField());
+                    
                 } else {
                     segment += this.char;
                     this.advance();
@@ -45,17 +44,24 @@ namespace text {
         }
 
         private makeField() {
+            let chars = this.char;
             this.advance();
+
             if (this.char === "}") {
                 this.advance();
+                this.paramNum += 1;
+                return null
             }
+            chars += this.char !== null ? this.char : "";
+            this.advance();
+            return chars;
         }
 
         format(params: string[]) {
             let index = 0;
             for (let i = 0; i < this.parsed.length; i++) {
                 if (this.parsed[i] === null) {
-                    if (index >= params.length) throw `Expected ${this.paramNum} params (got ${params.length})`;
+                    if (index >= params.length) throw `Expected ${this.paramNum} param(s) (got ${params.length})`;
                     this.parsed[i] = params[index];
                     index += 1;
                 }
@@ -73,7 +79,7 @@ namespace text {
      */
     //% block="format $text with $params"
     //% text.defl="Format this text {}!"
-    export function format(text: string, params: string[]) {
+    export function format(text: string, params: string[]): string {
         return new Format(text).format(params);
     }
 }

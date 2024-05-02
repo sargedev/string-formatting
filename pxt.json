@@ -2,7 +2,8 @@
     "name": "String formatting",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "Tests": "github:S0m3randomguy/tests#543b4705c7485e7dee84ddf6948f75c5aeffd449"
     },
     "files": [
         "main.ts",

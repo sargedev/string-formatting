@@ -1,6 +1,5 @@
 
-//% block="Formatting"
-namespace stringFormatting {
+namespace text {
     class Format {
         private index: number;
         private char: string;
@@ -73,7 +72,7 @@ namespace stringFormatting {
      * @param params String array that maps to fields in text parameter
      */
     //% block="format $text with $params"
-    //% text.defl = "Format this text {}!"
+    //% text.defl="Format this text {}!"
     export function format(text: string, params: string[]) {
         return new Format(text).format(params);
     }

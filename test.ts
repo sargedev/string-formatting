@@ -8,6 +8,11 @@ function testFormat(str: string, params: string[], expected: string) {
     new tests.AssertEqual(result, expected);
 }
 
+function testFormatException(str: string, params: string[], exception: string) {
+    method = () => text.format(str, params);
+    new tests.AssertRaises(method, exception);
+}
+
 function testSingle() {
     testFormat("Foo {}", ["bar"], "Foo bar");
 }
@@ -41,8 +46,16 @@ function testNoParams() {
 }
 
 function testFewParams() {
-    method = () => text.format("Foo {}", []);
-    new tests.AssertRaises(method, "Expected 1 param(s) (got 0)")
+    testFormatException("Foo {}", [], "Expected 1 param(s) (got 0)");
+}
+
+function testEscapeCharacters() {
+    testFormat("Foo \\{}", ["bar"], "Foo {}");
+    testFormat("Foo \\\\{}", ["bar"], "Foo \\bar");
+}
+
+function testBrokenEscapeCharacters() {
+    testFormatException("Foo \\", [], "Invalid escape character '\\'")
 }
 
 // Run tests
@@ -55,3 +68,5 @@ testUnclosedBracket();
 testNoRequiredParams();
 testNoParams();
 testFewParams();
+testEscapeCharacters();
+testBrokenEscapeCharacters();

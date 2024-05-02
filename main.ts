@@ -31,8 +31,13 @@ namespace text {
                         parsed.push(segment);
                         segment = "";
                     }
-                    parsed.push(this.makeField());
+                    if (this.makeField()) parsed.push(null);
+                    else segment += this.char !== null ? "{" + this.char : "{";
+                    this.advance();
                     
+                } else if (this.char === "\\") {
+                    segment += this.makeEscapeChar();
+                    this.advance();
                 } else {
                     segment += this.char;
                     this.advance();
@@ -44,17 +49,22 @@ namespace text {
         }
 
         private makeField() {
-            let chars = this.char;
             this.advance();
+            if (this.char !== "}") return false;
 
-            if (this.char === "}") {
-                this.advance();
-                this.paramNum += 1;
-                return null
-            }
-            chars += this.char !== null ? this.char : "";
+            this.paramNum += 1;
+            return true;
+        }
+
+        private makeEscapeChar() {
             this.advance();
-            return chars;
+            if (this.char === "{") {
+                return "{";
+            } else if (this.char === "\\") {
+                return "\\";
+            } else {
+                throw `Invalid escape character '\\${this.char || ""}'`;
+            }
         }
 
         format(params: string[]) {

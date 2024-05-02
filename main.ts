@@ -73,7 +73,7 @@ namespace stringFormatting {
      * @param params String array that maps to fields in text parameter
      */
     //% block="format $text with $params"
-    function format(text: string, params: string[]) {
+    export function format(text: string, params: string[]) {
         return new Format(text).format(params);
     }
 }

@@ -1,6 +1,6 @@
 
 namespace text {
-    class Format {
+    export class Format {
         private index: number;
         private char: string;
         private parsed: string[];

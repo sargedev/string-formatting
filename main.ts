@@ -5,7 +5,7 @@ namespace text {
         private char: string;
         private parsed: string[];
         private paramNum: number;
-        text: string;
+        private text: string;
 
         constructor(text: string) {
             this.text = text;
@@ -67,7 +67,7 @@ namespace text {
             }
         }
 
-        format(params: string[]) {
+        format(params: string[]): string {
             let index = 0;
             for (let i = 0; i < this.parsed.length; i++) {
                 if (this.parsed[i] === null) {

@@ -68,15 +68,16 @@ namespace text {
         }
 
         format(params: string[]): string {
+            let result = "";
             let index = 0;
             for (let i = 0; i < this.parsed.length; i++) {
                 if (this.parsed[i] === null) {
                     if (index >= params.length) throw `Expected ${this.paramNum} param(s) (got ${params.length})`;
-                    this.parsed[i] = params[index];
+                    result += params[index];
                     index += 1;
-                }
+                } else result += this.parsed[i];
             }
-            return this.parsed.join("");
+            return result;
         }
     }
 

@@ -67,7 +67,7 @@ namespace text {
             }
         }
 
-        format(params: string[]): string {
+        format(params: string[]=[]): string {
             let result = "";
             let index = 0;
             for (let i = 0; i < this.parsed.length; i++) {
